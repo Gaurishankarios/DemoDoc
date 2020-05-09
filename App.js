@@ -7,29 +7,32 @@
  */
 
 import React from 'react';
-import {SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
 // import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import WelcomeScreen from './src/screen/WelcomeScreen'
 import ListDisplay from './src/screen/ListDisplay'
 import SignInScreen from './src/screen/SignInScreen'
+import DetailView from './src/screen/DetailView'
+import { BlogProvider } from './src/context/BlogContext'
 
 const switchNavigator = createSwitchNavigator({
   loginFlow: createStackNavigator({
     Signin: SignInScreen,
     Welcome: WelcomeScreen,
     List: ListDisplay,
-    // Signin: SigninScreen,
-    
+    Detail: DetailView,
 
   }),
 })
 
-export default createAppContainer(switchNavigator);
+// export default createAppContainer(switchNavigator);
+const App = createAppContainer(switchNavigator);
+
+export default () => {
+  return (
+    <BlogProvider>
+      <App />
+    </BlogProvider>
+  );
+}

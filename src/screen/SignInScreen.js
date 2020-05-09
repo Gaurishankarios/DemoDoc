@@ -26,15 +26,24 @@ const SignInScreen = ({navigation}) => {
                 if(password==''){
                     alert("Please enter password")
                 }else{
-                    if ( (emailId=='clarion@clarion.com') && (password=='Clarion123') ){
-                        // console.log("Valid data");
-                        var pieces = emailId.split("@");
-                        navigation.navigate('Welcome', {name: pieces[0]})
 
+                    let regpass = /^(?=.*[A-Z])/;
+                    if (regpass.test(password) === false){
+                        alert("Password must contains 1 Upper case letter")
                     }else{
-                        alert('Please enter valid credentials')
-                        console.log("data is ", emailId, password)
+                        // console.log("password contains UPPER LATER")
+                        if ( (emailId=='clarion@clarion.com') && (password=='Clarion123') ){
+                            // console.log("Valid data");
+                            var pieces = emailId.split("@");
+                            navigation.navigate('Welcome', {name: pieces[0]})
+    
+                        }else{
+                            alert('Please enter valid credentials')
+                            console.log("data is ", emailId, password)
+                        }
                     }
+                    
+                   
                 }
              }
         }

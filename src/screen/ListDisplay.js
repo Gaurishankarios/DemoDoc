@@ -1,35 +1,40 @@
 //ListDisplay
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Text, Input, Button } from 'react-native-elements'
 import { FlatList } from 'react-native-gesture-handler';
+import BlogContext from '../context/BlogContext'
 
+// import Icon from 'feather-icons-react';
 // import { Feather } from '@expo/vector-icons'
 
 
 const ListDisplay = ({ navigation }) => {
 
-    const products = [
-        { id: 101, name: 'productFirst', rate: 7000, quality: 20 },
-        { id: 102, name: 'productSecond', rate: 10000, quality: 30 },
-        { id: 101, name: 'productThird', rate: 8000, quality: 10 },
-    ];
+    // const products = [
+    //     { id: 101, name: 'productFirst', rate: 7000, quality: 20 },
+    //     { id: 102, name: 'productSecond', rate: 10000, quality: 30 },
+    //     { id: 101, name: 'productThird', rate: 8000, quality: 10 },
+    // ];
 
-    const [list, updateList] = useState(products);
+    let {data, addBlogPost, deleteBlog} = useContext(BlogContext);
+    // console.log("value is:- ", value)
 
-    const btnDeletePress = (item) => {
-        console.log("item is ", item)
-        // const name = item.target.getAttribute("name")
-        const name = item.name;
-        updateList(list.filter(item => item.name !== name));
-    }
+
+    // const [list, updateList] = useState(products);
+
+    // const btnDeletePress = (item) => {
+    //     console.log("item is ", item)
+    //     // const name = item.target.getAttribute("name")
+    //     const name = item.name;
+    //     updateList(list.filter(item => item.name !== name));
+    // }
     return (
-        // <View style={styles.container}>
-        //     <Text h3>Welcome</Text>    
-        // </View>
+       
         <View>
+            
             <FlatList
-                data={list}
+                data={data}
                 renderItem={({ item }) => {
                     return (
                         <TouchableOpacity style={styles.touchView}>
@@ -41,7 +46,8 @@ const ListDisplay = ({ navigation }) => {
                                     <Text style={styles.textnamestyle1}>{item.name}</Text>
                                 </View>
                                 
-                                <Button title='Delete' onPress = {() => btnDeletePress(item)} />
+                                <Button title='Delete' onPress = {() => deleteBlog(item)}
+                                 />
                             </View>
 
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -68,9 +74,16 @@ const ListDisplay = ({ navigation }) => {
 
 ListDisplay.navigationOptions = ({navigation}) => {
     return { 
-        headerRight: () => (
-            <Button title="Add" buttonStyle={{ backgroundColor: '#03106E', marginRight: 15}} />
-        )
+        // headerRight: () => (
+        //     <Button title="Adds" buttonStyle={{ backgroundColor: '#03106E', marginRight: 15}}
+        //     onPress={navigation.navigate('Detail')} />
+        // )
+            headerRight: <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
+                    {/* <Feather name="plus" size={30} /> */}
+                    {/* <Icon name="plus" size={30}  /> */}
+                    <Text >Add</Text>
+                </TouchableOpacity>
+    
     };
 };
 
@@ -106,5 +119,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
 });
+// ListDisplay.contextType = BlogContext;
 
 export default ListDisplay;
